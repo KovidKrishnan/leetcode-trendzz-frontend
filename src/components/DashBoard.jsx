@@ -84,16 +84,19 @@ const DashBoard = () => {
   const fetchDataAndUpdateState = async (query, stateUpdater) => {
     try {
       const variables = { username };
-      const response = await fetch("https://leetcode-trendzz.onrender.com/graphql", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query,
-          variables,
-        }),
-      });
+      const response = await fetch(
+        "https://leetcode-trendzz.onrender.com/graphql",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query,
+            variables,
+          }),
+        }
+      );
       const jsonData = await response.json();
       stateUpdater(jsonData);
       setLoading(false);
@@ -116,7 +119,10 @@ const DashBoard = () => {
   // If loading, display a spinner
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "100vh" }}
+      >
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
@@ -142,16 +148,24 @@ const DashBoard = () => {
           <ProfileCard user={data.data.matchedUser} />
         </div>
         <div className="col mb-3">
-          {contestData && contestData.data && contestData.data.userContestRankingHistory && (
-            <UserContestPage contests={contestData.data.userContestRankingHistory} />
-          )}
+          {contestData &&
+            contestData.data &&
+            contestData.data.userContestRankingHistory && (
+              <UserContestPage
+                contests={contestData.data.userContestRankingHistory}
+              />
+            )}
         </div>
       </div>
       <div className="col">
         <div className="col mb-3">
-          {contestData && contestData.data && contestData.data.userContestRankingHistory && (
-            <AttendedContests contests={contestData.data.userContestRankingHistory} />
-          )}
+          {contestData &&
+            contestData.data &&
+            contestData.data.userContestRankingHistory && (
+              <AttendedContests
+                contests={contestData.data.userContestRankingHistory}
+              />
+            )}
         </div>
       </div>
     </div>
