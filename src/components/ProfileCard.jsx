@@ -34,13 +34,13 @@ const ProfileCard = ({ user }) => {
             </a>
 
             <a target="_blank" href={user.githubUrl}>
-              <button disabled={!user.githubUrl} className="bg-primary rounded-3 shadow">
+              <button disabled={!user.githubUrl} className="rounded-3 shadow">
                 <FontAwesomeIcon icon={faGithub} />
               </button>
             </a>
 
             <a target="_blank" href={user.twitterUrl}>
-              <button disabled={!user.twitterUrl} className="bg-primary rounded-3 shadow">
+              <button disabled={!user.twitterUrl} className="bg-info rounded-3 shadow">
                 <FontAwesomeIcon icon={faTwitter} />
               </button>
             </a>

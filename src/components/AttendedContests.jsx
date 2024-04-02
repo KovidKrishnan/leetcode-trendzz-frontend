@@ -92,7 +92,7 @@ const AttendedContests = ({ contests }) => {
       {selectedYear && (
         <div className="accordion " id="monthsAccordion">
           {months.map((month, index) => (
-            <div key={index} className="accordion-item">
+            <div key={index} className="accordion-item" style={{ borderBottom: '0px solid #ffffff' }}>
               <h2 className="accordion-header">
                 <button
                   className="accordion-button"
