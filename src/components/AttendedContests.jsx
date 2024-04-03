@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import Contest from "./Contest";
-import { Accordion, Card, Button } from "react-bootstrap";
-import AccordionWithList from "./AccordionWithList";
+import { Accordion } from "react-bootstrap";
 
 const AttendedContests = ({ contests }) => {
-  // Filter attended contests
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [months, setMonths] = useState([]);
+  const [activeAccordionItem, setActiveAccordionItem] = useState(null);
+
   const attendedContests = contests.filter(
     (contest) => contest.attended === true
   );
 
-  // Get unique years from attended contests
   const uniqueYears = [
     ...new Set(
       attendedContests.map((contest) =>
@@ -18,12 +20,6 @@ const AttendedContests = ({ contests }) => {
     ),
   ];
 
-  // State to store selected year and months
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [months, setMonths] = useState([]);
-
-  // Function to get unique months for the selected year
   const getUniqueMonths = (year) => {
     const monthsForYear = attendedContests.filter(
       (contest) =>
@@ -39,14 +35,16 @@ const AttendedContests = ({ contests }) => {
     return uniqueMonths;
   };
 
-  // Function to handle year change
   const handleYearChange = (e) => {
     const year = parseInt(e.target.value);
     setSelectedYear(year);
     const uniqueMonths = getUniqueMonths(year);
-    console.log(uniqueMonths);
     setMonths(uniqueMonths);
     setSelectedMonth("");
+  };
+
+  const handleAccordionItemClick = (month) => {
+    setSelectedMonth((prevMonth) => (prevMonth === month ? "" : month));
   };
 
   const nameMonth = {
@@ -64,17 +62,9 @@ const AttendedContests = ({ contests }) => {
     11: "Dec",
   };
 
-  // Function to handle month change
-  const handleMonthChange = (e) => {
-    const month = parseInt(e.target.value);
-    setSelectedMonth(month);
-  };
-
   return (
-    <div style={{width: '360px'}}>
-      {/* Dropdown for selecting year */}
+    <div style={{ width: "360px" }}>
       <select
-      
         className="form-select mb-3"
         value={selectedYear}
         onChange={handleYearChange}
@@ -90,32 +80,32 @@ const AttendedContests = ({ contests }) => {
       </select>
 
       {selectedYear && (
-        <div className="accordion " id="monthsAccordion">
+        <Accordion
+          activeKey={selectedMonth}
+          className="accordion"
+          id="monthsAccordion"
+          style={{ borderRadius: "20px" }}
+        >
           {months.map((month, index) => (
-            <div key={index} className="accordion-item" style={{ borderBottom: '0px solid #ffffff' }}>
-              <h2 className="accordion-header">
-                <button
-                  className="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target={`#collapse-${index}`}
-                  aria-expanded="false"
-                  aria-controls={`collapse-${index}`}
-                  onClick={() => setSelectedMonth(month)}
-                >
-                  {nameMonth[month]}
-                </button>
-              </h2>
-              <div
-                id={`collapse-${index}`}
+            <Accordion.Item key={index} eventKey={month}>
+              <Accordion.Header
+                onClick={() => handleAccordionItemClick(month)}
+                style={{ cursor: "pointer" }} // Add pointer cursor
+              >
+                {nameMonth[month]}
+              </Accordion.Header>
+              <Accordion.Body
                 className={`accordion-collapse collapse${
-                  selectedMonth === month ? " show" : ""
+                  selectedMonth === month ? " rounded-2 show" : ""
                 }`}
                 aria-labelledby={`heading-${index}`}
                 data-bs-parent="#monthsAccordion"
+                style={{
+                  transition: "all 1s ease-in-out",
+                  overflow: "hidden", // Hide overflow when accordion is collapsed
+                }}
               >
                 <div className="accordion-body d-flex justify-content-center flex-wrap">
-                  {/* List of contests for the selected month */}
                   {attendedContests
                     .filter(
                       (contest) =>
@@ -132,10 +122,10 @@ const AttendedContests = ({ contests }) => {
                       </div>
                     ))}
                 </div>
-              </div>
-            </div>
+              </Accordion.Body>
+            </Accordion.Item>
           ))}
-        </div>
+        </Accordion>
       )}
     </div>
   );

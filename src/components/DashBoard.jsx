@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 import UserContestPage from "./UserContestPage";
 import AttendedContests from "./AttendedContests";
+import SkillsCard from "./SkillsCard"
 
 const DashBoard = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const DashBoard = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({ data: null });
   const [contestData, setContestData] = useState({ contestData: null });
+  const [submissionData, setSubmissionData] = useState({submissionData: null})
 
   // GraphQL queries
   const userProfileQuery = `
@@ -80,6 +82,27 @@ const DashBoard = () => {
     }
   `;
 
+  const userSubmissionQuery = `
+  query userProblemsSolved($username: String!) {
+    allQuestionsCount {
+      difficulty
+      count
+    }
+    matchedUser(username: $username) {
+      problemsSolvedBeatsStats {
+        difficulty
+        percentage
+      }
+      submitStatsGlobal {
+        acSubmissionNum {
+          difficulty
+          count
+        }
+      }
+    }
+  }
+`;
+
   // Function to fetch data from GraphQL API
   const fetchDataAndUpdateState = async (query, stateUpdater) => {
     try {
@@ -109,12 +132,18 @@ const DashBoard = () => {
   // Fetch user profile data on component mount
   useEffect(() => {
     fetchDataAndUpdateState(userProfileQuery, setData);
-  }, [username, userProfileQuery]);
+  }, [username]);
 
   // Fetch user contest data on component mount
   useEffect(() => {
     fetchDataAndUpdateState(userContestQuery, setContestData);
-  }, [username, userContestQuery]);
+  }, [username]);
+
+  // Fetch user submission data on component mount
+  useEffect(() => {
+    fetchDataAndUpdateState(userSubmissionQuery, setSubmissionData);
+    console.log(submissionData)
+  }, [username]);
 
   // If loading, display a spinner
   if (loading) {
@@ -155,6 +184,9 @@ const DashBoard = () => {
                 contests={contestData.data.userContestRankingHistory}
               />
             )}
+        </div>
+        <div className="col mb-3">
+          <SkillsCard skills={data.data.matchedUser.profile.skillTags} />
         </div>
       </div>
       <div className="col">
