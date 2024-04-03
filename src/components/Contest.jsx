@@ -10,7 +10,6 @@ export default function Contest({ contest }) {
   return (
     <div
       className="d-flex flex-wrap justify-content-betwween border-bottom my-0 py-1"
-      style={{ width: "330px" }}
     >
       <div className="d-flex flex-wrap justify-content-between align-items-center">
         <div className="d-flex mb-1 justify-content-between">

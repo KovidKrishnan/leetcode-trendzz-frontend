@@ -10,7 +10,10 @@ import {
 const ProfileCard = ({ user }) => {
   console.log(user);
   return (
-    <Card style={{backgroundImage:'url(https://static.vecteezy.com/system/resources/previews/001/987/642/non_2x/abstract-diagonal-light-grey-silver-background-technology-concept-free-vector.jpg)', minWidth: '360px'}} className="rounded-3">
+    <div style={{ width: '360px'}} >
+      <h4>Profile</h4>
+      <hr />
+      <Card style={{backgroundImage:'url(https://static.vecteezy.com/system/resources/previews/001/987/642/non_2x/abstract-diagonal-light-grey-silver-background-technology-concept-free-vector.jpg)',}} className="rounded-3">
       <Card.Body className="d-flex flex-column">
         {/* Image on the left */}
         <div className="d-flex align-items-center">
@@ -47,6 +50,7 @@ const ProfileCard = ({ user }) => {
           </div>
       </Card.Body>
     </Card>
+    </div>
   );
 };
 

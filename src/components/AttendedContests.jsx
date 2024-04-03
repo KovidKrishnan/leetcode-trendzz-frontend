@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Contest from "./Contest";
 import { Accordion } from "react-bootstrap";
 
-const AttendedContests = ({ contests }) => {
+const AttendedContests = ({ contests, setWhereToPlace }) => {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [months, setMonths] = useState([]);
-  const [activeAccordionItem, setActiveAccordionItem] = useState(null);
+
+  useEffect(() => {
+    if(selectedMonth === "") setWhereToPlace(false)
+    else setWhereToPlace(true)
+  }, [selectedMonth])
 
   const attendedContests = contests.filter(
     (contest) => contest.attended === true
@@ -45,6 +49,7 @@ const AttendedContests = ({ contests }) => {
 
   const handleAccordionItemClick = (month) => {
     setSelectedMonth((prevMonth) => (prevMonth === month ? "" : month));
+
   };
 
   const nameMonth = {
@@ -64,6 +69,8 @@ const AttendedContests = ({ contests }) => {
 
   return (
     <div style={{ width: "360px" }}>
+      <h4>Participated Contests</h4>
+      <hr />
       <select
         className="form-select mb-3"
         value={selectedYear}
@@ -84,7 +91,6 @@ const AttendedContests = ({ contests }) => {
           activeKey={selectedMonth}
           className="accordion"
           id="monthsAccordion"
-          style={{ borderRadius: "20px" }}
         >
           {months.map((month, index) => (
             <Accordion.Item key={index} eventKey={month}>
@@ -96,7 +102,7 @@ const AttendedContests = ({ contests }) => {
               </Accordion.Header>
               <Accordion.Body
                 className={`accordion-collapse collapse${
-                  selectedMonth === month ? " rounded-2 show" : ""
+                  selectedMonth === month ? " rounded-2 show p-0" : ""
                 }`}
                 aria-labelledby={`heading-${index}`}
                 data-bs-parent="#monthsAccordion"

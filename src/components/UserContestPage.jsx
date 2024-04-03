@@ -54,15 +54,14 @@ export default function UserContestPage({contests}) {
     const report = findBestSolvedContest(attendedContests);
   return (
     <div>
-        <Card style={{minWidth: '300px', height: '255px'}}>
-            <Card.Title>Best Rated Contest &#x1F525;</Card.Title>
-            <Card.Body>
+      <h4>Best Rated Contest &#x1F525;</h4>
+      <hr />
+        <div style={{width: '360px', height: '196px'}} className='flex-wrap justify-content-center bg-light text-dark border rounded-3 p-4'>
                 <p>Name: <b className='text-warning'>{report.contestName}</b> </p>
                 <p >Date: <b className='text-primary'>{report.contestDate}</b></p>
                 <p>Rating:<b className='text-danger'> {Math.fround(report.rating).toFixed(2)}</b></p>
                 <p>Rank: <b className='text-success'>{report.ranking}</b></p>
-            </Card.Body>
-        </Card>
+        </div>
     </div>
   )
 }

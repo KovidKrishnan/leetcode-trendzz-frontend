@@ -5,6 +5,9 @@ import ProfileCard from "./ProfileCard";
 import UserContestPage from "./UserContestPage";
 import AttendedContests from "./AttendedContests";
 import SkillsCard from "./SkillsCard"
+import MeetTheDev from "./MeetTheDev";
+import SubmissionsCard from "./SubmissionsCard";
+import SubmissionsRatingProgress from "./SubmissionsRatingProgress";
 
 const DashBoard = () => {
   const location = useLocation();
@@ -15,6 +18,7 @@ const DashBoard = () => {
   const [data, setData] = useState({ data: null });
   const [contestData, setContestData] = useState({ contestData: null });
   const [submissionData, setSubmissionData] = useState({submissionData: null})
+  const [whereToPlace, setWhereToPlace] = useState(false)
 
   // GraphQL queries
   const userProfileQuery = `
@@ -171,11 +175,41 @@ const DashBoard = () => {
 
   // Render the fetched data
   return (
-    <div className="row " style={{ maxHeight: "calc(100vh - 5rem)" }}>
-      <div className="col mx-0">
+    <div className="row mt-2" style={{ maxHeight: "calc(100vh - 5rem)" }}>
+      <div className="col  px-4">
         <div className="col mb-3">
           <ProfileCard user={data.data.matchedUser} />
         </div>
+        <div className="col mb-3">
+          <SubmissionsRatingProgress></SubmissionsRatingProgress>
+        </div>
+        <div className="col mb-3">
+          <SkillsCard skills={data.data.matchedUser.profile.skillTags} />
+        </div>
+        {whereToPlace &&
+          <div className="col mb-3">
+          <MeetTheDev></MeetTheDev>
+        </div>
+        }
+      </div>
+      <div className="col px-4">
+        <div className="col mb-3">
+          {contestData &&
+            contestData.data &&
+            contestData.data.userContestRankingHistory && (
+              <AttendedContests
+                contests={contestData.data.userContestRankingHistory}
+                setWhereToPlace={setWhereToPlace}
+              />
+            )}
+        </div>
+        {!whereToPlace &&
+          <div className="col mb-3">
+          <MeetTheDev></MeetTheDev>
+        </div>
+        }
+      </div>
+      <div className="col px-4">
         <div className="col mb-3">
           {contestData &&
             contestData.data &&
@@ -185,20 +219,8 @@ const DashBoard = () => {
               />
             )}
         </div>
-        <div className="col mb-3">
-          <SkillsCard skills={data.data.matchedUser.profile.skillTags} />
-        </div>
-      </div>
-      <div className="col">
-        <div className="col mb-3">
-          {contestData &&
-            contestData.data &&
-            contestData.data.userContestRankingHistory && (
-              <AttendedContests
-                contests={contestData.data.userContestRankingHistory}
-              />
-            )}
-        </div>
+        
+
       </div>
     </div>
   );

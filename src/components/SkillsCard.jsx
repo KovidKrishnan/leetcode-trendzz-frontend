@@ -8,10 +8,10 @@ const SkillsCard = ({ skills }) => {
   }
 
   return (
-    <div className='bg-white p-3 rounded-3 d-flex flex-wrap justify-content-around align-items-center'>
+    <div className='bg-white p-3 rounded-3 d-flex flex-wrap justify-content-center align-items-center' style={{width: '360px'}}>
       <Card.Text>{skills.map((skill, index) => (
         <span key={index}>
-          <span className='rounded-pill shadow bg-secondary text-light py-1 px-3'>{skill}</span>&nbsp;
+          <span className='rounded-pill bg-secondary text-light py-1 px-3'>{skill}</span>&nbsp;
         </span>
       ))}
       </Card.Text>

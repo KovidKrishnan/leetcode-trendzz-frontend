@@ -4,7 +4,6 @@ import UsernameInput from "./components/UsernameInput";
 import DashBoard from "./components/DashBoard";
 function App() {
   return (
-      <div>
       <Router>
         <Routes>
           <Route
@@ -17,7 +16,6 @@ function App() {
           />
         </Routes>
       </Router>
-    </div>
     
   );
 }
