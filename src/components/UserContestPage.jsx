@@ -53,10 +53,10 @@ export default function UserContestPage({contests}) {
     const attendedContests = contests.filter(contest => contest.attended === true);
     const report = findBestSolvedContest(attendedContests);
   return (
-    <div>
+    <div style={{width: '360px'}}>
       <h4>Best Rated Contest &#x1F525;</h4>
       <hr />
-        <div style={{width: '360px', height: '196px'}} className='flex-wrap justify-content-center bg-light text-dark border rounded-3 p-4'>
+        <div className='flex-wrap bg-light justify-content-center text-dark border rounded-3 p-4' style={{height: '194px'}}>
                 <p>Name: <b className='text-warning'>{report.contestName}</b> </p>
                 <p >Date: <b className='text-primary'>{report.contestDate}</b></p>
                 <p>Rating:<b className='text-danger'> {Math.fround(report.rating).toFixed(2)}</b></p>

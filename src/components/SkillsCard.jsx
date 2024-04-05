@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardSubtitle } from 'react-bootstrap';
 
 const SkillsCard = ({ skills }) => {
   // Check if skills is undefined, null, or empty array, then return null
@@ -8,13 +7,10 @@ const SkillsCard = ({ skills }) => {
   }
 
   return (
-    <div className='bg-white p-3 rounded-3 d-flex flex-wrap justify-content-center align-items-center' style={{width: '360px'}}>
-      <Card.Text>{skills.map((skill, index) => (
-        <span key={index}>
-          <span className='rounded-pill bg-secondary text-light py-1 px-3'>{skill}</span>&nbsp;
-        </span>
+    <div className='p-3 rounded-3 d-flex flex-wrap justify-content-center align-items-center border' style={{width: '360px'}}>
+      {skills.map((skill, index) => (
+          <span key={index} className='rounded-pill bg-secondary text-light py-1 px-3 m-1'>{skill}&nbsp;</span>
       ))}
-      </Card.Text>
     </div>
   );
 };

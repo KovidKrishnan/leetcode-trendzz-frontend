@@ -34,7 +34,7 @@ export default function UsernameInput() {
     <div>
       <div
         style={{
-          width: "500px",
+          width: "min(100%, 500px)",
           backgroundColor: "rgba(255, 255, 255, 0.4)",
           backdropFilter: "blur(10px)",
         }}

@@ -8,9 +8,18 @@ const AttendedContests = ({ contests, setWhereToPlace }) => {
   const [months, setMonths] = useState([]);
 
   useEffect(() => {
-    if(selectedMonth === "") setWhereToPlace(false)
-    else setWhereToPlace(true)
-  }, [selectedMonth])
+    const timer = setTimeout(() => {
+      if (selectedMonth === "") {
+        setWhereToPlace(false);
+      } else {
+        setWhereToPlace(true);
+      }
+    }, 300);
+  
+    // Clear the timer to avoid memory leaks
+    return () => clearTimeout(timer);
+  }, [selectedMonth]);
+  
 
   const attendedContests = contests.filter(
     (contest) => contest.attended === true
@@ -71,7 +80,8 @@ const AttendedContests = ({ contests, setWhereToPlace }) => {
     <div style={{ width: "360px" }}>
       <h4>Participated Contests</h4>
       <hr />
-      <select
+      {attendedContests.length > 0 &&
+        <select
         className="form-select mb-3"
         value={selectedYear}
         onChange={handleYearChange}
@@ -85,6 +95,10 @@ const AttendedContests = ({ contests, setWhereToPlace }) => {
           </option>
         ))}
       </select>
+      }
+      {attendedContests.length == 0 &&
+        <p>No Participated Contests Available</p>
+      }
 
       {selectedYear && (
         <Accordion

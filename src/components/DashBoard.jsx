@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 import UserContestPage from "./UserContestPage";
 import AttendedContests from "./AttendedContests";
-import SkillsCard from "./SkillsCard"
+import SkillsCard from "./SkillsCard";
 import MeetTheDev from "./MeetTheDev";
 import SubmissionsCard from "./SubmissionsCard";
 import SubmissionsRatingProgress from "./SubmissionsRatingProgress";
@@ -17,8 +17,10 @@ const DashBoard = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({ data: null });
   const [contestData, setContestData] = useState({ contestData: null });
-  const [submissionData, setSubmissionData] = useState({submissionData: null})
-  const [whereToPlace, setWhereToPlace] = useState(false)
+  const [submissionData, setSubmissionData] = useState({
+    submissionData: null,
+  });
+  const [whereToPlace, setWhereToPlace] = useState(false);
 
   // GraphQL queries
   const userProfileQuery = `
@@ -86,8 +88,7 @@ const DashBoard = () => {
     }
   `;
 
-  const userSubmissionQuery = `
-  query userProblemsSolved($username: String!) {
+  const userSubmissionQuery = `query userProblemsSolved($username: String!) {
     allQuestionsCount {
       difficulty
       count
@@ -104,8 +105,7 @@ const DashBoard = () => {
         }
       }
     }
-  }
-`;
+  }`;
 
   // Function to fetch data from GraphQL API
   const fetchDataAndUpdateState = async (query, stateUpdater) => {
@@ -146,8 +146,9 @@ const DashBoard = () => {
   // Fetch user submission data on component mount
   useEffect(() => {
     fetchDataAndUpdateState(userSubmissionQuery, setSubmissionData);
-    console.log(submissionData)
+    console.log(submissionData);
   }, [username]);
+
 
   // If loading, display a spinner
   if (loading) {
@@ -175,25 +176,40 @@ const DashBoard = () => {
 
   // Render the fetched data
   return (
-    <div className="row mt-2" style={{ maxHeight: "calc(100vh - 5rem)" }}>
-      <div className="col  px-4">
+    <div className="row mt-2" style={{ maxHeight: "calc(100vh - 5rem)", }}>
+      <div className={whereToPlace ? "col px-4" : "col px-4"}>
         <div className="col mb-3">
           <ProfileCard user={data.data.matchedUser} />
         </div>
         <div className="col mb-3">
-          <SubmissionsRatingProgress></SubmissionsRatingProgress>
+          <SubmissionsRatingProgress
+            submissionData={submissionData}
+          ></SubmissionsRatingProgress>
         </div>
         <div className="col mb-3">
           <SkillsCard skills={data.data.matchedUser.profile.skillTags} />
         </div>
-        {whereToPlace &&
-          <div className="col mb-3">
-          <MeetTheDev></MeetTheDev>
+      </div>
+
+      <div className="col px-4">
+      <div className="col mb-3">
+          {submissionData && submissionData.data && (
+              <SubmissionsCard data={submissionData.data}></SubmissionsCard>
+            )}
         </div>
-        }
+        <div className="col mb-3">
+              {contestData &&
+                contestData.data &&
+                contestData.data.userContestRankingHistory && (
+                  <UserContestPage
+                    contests={contestData.data.userContestRankingHistory}
+                  />
+                )}
+          </div>
       </div>
       <div className="col px-4">
-        <div className="col mb-3">
+            
+          <div className="col mb-3">
           {contestData &&
             contestData.data &&
             contestData.data.userContestRankingHistory && (
@@ -203,25 +219,11 @@ const DashBoard = () => {
               />
             )}
         </div>
-        {!whereToPlace &&
-          <div className="col mb-3">
-          <MeetTheDev></MeetTheDev>
-        </div>
-        }
-      </div>
-      <div className="col px-4">
         <div className="col mb-3">
-          {contestData &&
-            contestData.data &&
-            contestData.data.userContestRankingHistory && (
-              <UserContestPage
-                contests={contestData.data.userContestRankingHistory}
-              />
-            )}
-        </div>
-        
-
+              <MeetTheDev></MeetTheDev>
+            </div>
       </div>
+      
     </div>
   );
 };
