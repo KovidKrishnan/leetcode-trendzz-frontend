@@ -1,7 +1,11 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import { SiLeetcode } from "react-icons/si";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLinkedin,
+  faGithub,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 
 export default function MeetTheDev() {
@@ -21,16 +25,13 @@ export default function MeetTheDev() {
         <Card.Text>
           <hr />
           <Button variant="link" onClick={() => openProfile('https://github.com/KovidKrishnan')}>
-            <FaGithub size={24} />
-          </Button>
-          <Button variant="link" onClick={() => openProfile('https://leetcode.com/Kovid_krishnan_30')}>
-          <SiLeetcode />
+          <FontAwesomeIcon icon={faGithub} />
           </Button>
           <Button variant="link" onClick={() => openProfile('https://www.linkedin.com/in/kovidkrishnan')}>
-            <FaLinkedin size={24} />
+          <FontAwesomeIcon icon={faLinkedin} />
           </Button>
           <Button variant="link" onClick={() => openProfile('https://twitter.com/krishnan_kovid')}>
-            <FaTwitter size={24} />
+          <FontAwesomeIcon icon={faTwitter} />
           </Button>
         </Card.Text>
       </div>
