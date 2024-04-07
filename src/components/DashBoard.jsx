@@ -113,7 +113,7 @@ const DashBoard = () => {
     try {
       const variables = { username };
       const response = await fetch(
-        "https://leetcode-trendzz.onrender.com/graphql",
+        "https://leetcode.com/graphql",
         {
           method: "POST",
           headers: {
