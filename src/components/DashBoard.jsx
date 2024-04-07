@@ -118,6 +118,8 @@ const DashBoard = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Referer: 'https://leetcode.com',
+            mode: 'no-cors',
           },
           body: JSON.stringify({
             query,
