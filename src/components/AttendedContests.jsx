@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Contest from "./Contest";
 import { Accordion } from "react-bootstrap";
 
-const AttendedContests = ({ contests, setWhereToPlace }) => {
+const AttendedContests = ({ contests, setWhereToPlace, bgWidth }) => {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [months, setMonths] = useState([]);
@@ -77,7 +77,7 @@ const AttendedContests = ({ contests, setWhereToPlace }) => {
   };
 
   return (
-    <div style={{ width: "360px" }}>
+    <div style={{ width: bgWidth }}>
       <h4>Participated Contests</h4>
       <hr />
       {attendedContests.length > 0 &&

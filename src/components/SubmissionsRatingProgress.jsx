@@ -15,9 +15,9 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     });
   }
 
-const SubmissionsRatingProgress = () => {
+const SubmissionsRatingProgress = ({bgWidth}) => {
   return (
-    <div style={{width: '360px'}} >
+    <div style={{width: bgWidth}} >
         <h4>Track your progress</h4>
         <hr />
         <div className='bg-light rounded-3 d-flex justify-content-center align-items-center p-1'>

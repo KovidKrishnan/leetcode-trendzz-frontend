@@ -49,11 +49,11 @@ function findBestSolvedContest(attendedContests) {
     }
   }
 
-export default function UserContestPage({contests}) {
+export default function UserContestPage({contests, bgWidth}) {
     const attendedContests = contests.filter(contest => contest.attended === true);
     const report = findBestSolvedContest(attendedContests);
   return (
-    <div style={{width: '360px'}}>
+    <div style={{width: bgWidth}}>
       <h4>Best Rated Contest &#x1F525;</h4>
       <hr />
         <div className='flex-wrap bg-light justify-content-center text-dark border rounded-3 p-4' style={{height: '194px'}}>

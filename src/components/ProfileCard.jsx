@@ -7,10 +7,10 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, bgWidth }) => {
   console.log(user);
   return (
-    <div style={{ width: '360px',}} >
+    <div style={{ width: bgWidth,}} >
       <h4>Profile</h4>
       <hr />
 <Card style={{backgroundImage:'url(https://static.vecteezy.com/system/resources/previews/001/987/642/non_2x/abstract-diagonal-light-grey-silver-background-technology-concept-free-vector.jpg)', height: '194px'}} className="rounded-3 d-flex flex-column justify-content-center">

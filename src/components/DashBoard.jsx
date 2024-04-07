@@ -21,6 +21,7 @@ const DashBoard = () => {
     submissionData: null,
   });
   const [whereToPlace, setWhereToPlace] = useState(false);
+  const [backgroundWidth, setBackgroundWidth] = useState(360); // Default width
 
   // GraphQL queries
   const userProfileQuery = `
@@ -133,6 +134,29 @@ const DashBoard = () => {
     }
   };
 
+  
+
+  useEffect(() => {
+      function handleResize() {
+          if (window.innerWidth <= 330) {
+              setBackgroundWidth(330);
+          } else {
+              setBackgroundWidth(360);
+          }
+      }
+
+      // Initial call
+      handleResize();
+
+      // Event listener for window resize
+      window.addEventListener('resize', handleResize);
+
+      // Cleanup on component unmount
+      return () => {
+          window.removeEventListener('resize', handleResize);
+      };
+  }, []);
+
   // Fetch user profile data on component mount
   useEffect(() => {
     fetchDataAndUpdateState(userProfileQuery, setData);
@@ -174,53 +198,55 @@ const DashBoard = () => {
     );
   }
 
+
+
   // Render the fetched data
   return (
-    <div className="row mt-2" style={{ maxHeight: "calc(100vh - 5rem)", }}>
-      <div className={whereToPlace ? "col px-4" : "col px-4"}>
-        <div className="col mb-3">
-          <ProfileCard user={data.data.matchedUser} />
+    <div className="d-flex flex-wrap mt-2 w-md-100 w-lg-100 w-xl-100" style={{justifyContent: 'space-around', }}>
+      <div className='d-flex flex-column p-md-2 p-lg-2 p-xl-2 mx-lg-2'>
+        <div className="mb-3">
+          <ProfileCard bgWidth={backgroundWidth} user={data.data.matchedUser} />
         </div>
-        <div className="col mb-3">
-          <SubmissionsRatingProgress
+        <div className="mb-3">
+          <SubmissionsRatingProgress  bgWidth={backgroundWidth}
             submissionData={submissionData}
           ></SubmissionsRatingProgress>
         </div>
-        <div className="col mb-3">
-          <SkillsCard skills={data.data.matchedUser.profile.skillTags} />
+        <div className="mb-3">
+          <SkillsCard  bgWidth={backgroundWidth} skills={data.data.matchedUser.profile.skillTags} />
         </div>
       </div>
 
-      <div className="col px-4">
-      <div className="col mb-3">
+      <div className="d-flex flex-column  p-md-2 p-lg-2 p-xl-2 mx-lg-4">
+      <div className="mb-3">
           {submissionData && submissionData.data && (
-              <SubmissionsCard data={submissionData.data}></SubmissionsCard>
+              <SubmissionsCard bgWidth={backgroundWidth} data={submissionData.data}></SubmissionsCard>
             )}
         </div>
-        <div className="col mb-3">
+        <div className=" mb-3">
               {contestData &&
                 contestData.data &&
                 contestData.data.userContestRankingHistory && (
-                  <UserContestPage
+                  <UserContestPage bgWidth={backgroundWidth}
                     contests={contestData.data.userContestRankingHistory}
                   />
                 )}
           </div>
       </div>
-      <div className="col px-4">
+      <div className="d-flex flex-column flex-wrap p-md-2 p-lg-2 p-xl-2 mx-lg-1">
             
-          <div className="col mb-3">
+          <div className="mb-3">
           {contestData &&
             contestData.data &&
             contestData.data.userContestRankingHistory && (
-              <AttendedContests
+              <AttendedContests bgWidth={backgroundWidth}
                 contests={contestData.data.userContestRankingHistory}
                 setWhereToPlace={setWhereToPlace}
               />
             )}
         </div>
-        <div className="col mb-3">
-              <MeetTheDev></MeetTheDev>
+        <div className="mb-3">
+              <MeetTheDev bgWidth={backgroundWidth}></MeetTheDev>
             </div>
       </div>
       

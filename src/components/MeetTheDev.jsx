@@ -8,13 +8,13 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 
-export default function MeetTheDev() {
+export default function MeetTheDev({bgWidth}) {
   const openProfile = (url) => {
     window.open(url, '_blank');
   };
 
   return (
-    <div style={{ width: '360px' }}>
+    <div style={{ width: bgWidth }}>
       <h4>Meet the Developer</h4>
       <hr />
       <div className=' text-dark p-4 rounded-3 d-flex flex-wrap justify-content-center align-items-center' style={{backgroundColor: 'rgba(255, 255, 255, 0.9)', backdropFilter: 'blur(10px)'}}>

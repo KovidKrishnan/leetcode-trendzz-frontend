@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ProgressBar, Tooltip } from "react-bootstrap";
 
-export default function SubmissionsCard({ data }) {
+export default function SubmissionsCard({ data, bgWidth }) {
   const totalQuestions = data.allQuestionsCount;
   const acSubmissions = data.matchedUser.submitStatsGlobal.acSubmissionNum;
 
@@ -92,7 +92,7 @@ export default function SubmissionsCard({ data }) {
   );
 
   return (
-    <div style={{ width: "360px" }}>
+    <div style={{ width: bgWidth }}>
       <h4>Submission Count</h4>
       <hr />
       <div className="d-flex flex-wrap flex-column justify-content-between p-3 rounded-3" style={{backgroundColor: 'rgba(255, 255, 255, 0.9)', backdropFilter: 'blur(10px)', height: '194px'}}>
