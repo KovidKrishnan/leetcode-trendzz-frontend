@@ -113,13 +113,11 @@ const DashBoard = () => {
     try {
       const variables = { username };
       const response = await fetch(
-        "https://leetcode.com/graphql",
+        "https://leetcode-trendzz.onrender.com/graphql",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Referer: 'https://leetcode.com',
-            mode: 'no-cors',
           },
           body: JSON.stringify({
             query,
